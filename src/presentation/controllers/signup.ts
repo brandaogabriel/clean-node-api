@@ -1,8 +1,9 @@
 import { HttpRequest, HttpResponse } from '../protocols/http';
+import { Controller } from '../protocols/controller';
 import { badRequest } from '../helpers/http-helper';
-import MissiginParam from '../errors/missing-param-error';
+import { MissingParam } from '../errors/missing-param-error';
 
-export default class SignUpController {
+export class SignUpController implements Controller {
   handle(httpRequest: HttpRequest): HttpResponse {
     const requiredFields = [
       'name',
@@ -10,10 +11,16 @@ export default class SignUpController {
       'password',
       'passwordConfirmation',
     ];
+
     for (const field of requiredFields) {
       if (!httpRequest.body[field]) {
-        return badRequest(new MissiginParam(field));
+        return badRequest(new MissingParam(field));
       }
     }
+
+    return {
+      statusCode: 200,
+      body: 'ok',
+    };
   }
 }

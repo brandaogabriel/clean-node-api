@@ -1,5 +1,5 @@
-import SignUpController from './signup';
-import MissiginParam from '../errors/missing-param-error';
+import { SignUpController } from './signup';
+import { MissingParam } from '../errors/missing-param-error';
 
 describe('SignUp Controller', () => {
   test('Should return 400 if no name is provided', () => {
@@ -13,7 +13,7 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissiginParam('name'));
+    expect(httpResponse.body).toEqual(new MissingParam('name'));
   });
 
   test('Should return 400 if no email is provided', () => {
@@ -27,7 +27,7 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissiginParam('email'));
+    expect(httpResponse.body).toEqual(new MissingParam('email'));
   });
 
   test('Should return 400 if no password is provided', () => {
@@ -41,7 +41,7 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissiginParam('password'));
+    expect(httpResponse.body).toEqual(new MissingParam('password'));
   });
 
   test('Should return 400 if no password confirmation is provided', () => {
@@ -55,8 +55,6 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new MissiginParam('passwordConfirmation'),
-    );
+    expect(httpResponse.body).toEqual(new MissingParam('passwordConfirmation'));
   });
 });
