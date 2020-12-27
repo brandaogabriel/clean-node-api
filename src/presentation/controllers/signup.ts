@@ -4,11 +4,11 @@ import MissiginParam from '../errors/missing-param-error';
 
 export default class SignUpController {
   handle(httpRequest: HttpRequest): HttpResponse {
-    if (!httpRequest.body.name) {
-      return badRequest(new MissiginParam('name'));
-    }
-    if (!httpRequest.body.email) {
-      return badRequest(new MissiginParam('email'));
+    const requiredFields = ['name', 'email', 'password'];
+    for (const field of requiredFields) {
+      if (!httpRequest.body[field]) {
+        return badRequest(new MissiginParam(field));
+      }
     }
   }
 }
